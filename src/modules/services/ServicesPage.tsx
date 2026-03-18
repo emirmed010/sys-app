@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../data/db';
 import { Modal } from '../../shared/components/Modal';
@@ -158,7 +159,7 @@ export const ServicesPage = () => {
                     <span className="material-symbols-outlined text-2xl">design_services</span>
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-800 dark:text-slate-100">{cat.name}</h3>
+                    <h3 className="font-bold text-slate-800 dark:text-slate-100"><Link to={`/services/categories/${cat.id}`} className="hover:text-primary transition-colors">{cat.name}</Link></h3>
                     {cat.description && <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{cat.description}</p>}
                     <div className="flex gap-2 mt-1.5">
                       <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${cat.isActive ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'}`}>
@@ -171,6 +172,13 @@ export const ServicesPage = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-1" onClick={e => e.stopPropagation()}>
+                  <Link
+                    to={`/services/categories/${cat.id}`}
+                    className="p-1.5 text-slate-400 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-lg transition-colors"
+                    title="عرض الملف"
+                  >
+                    <span className="material-symbols-outlined text-xl">visibility</span>
+                  </Link>
                   <button
                     onClick={() => openAddSubtype(cat.id)}
                     className="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
@@ -232,7 +240,7 @@ export const ServicesPage = () => {
                         <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                           {catSubtypes.map(sub => (
                             <tr key={sub.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-                              <td className="px-6 py-3 font-bold text-slate-800 dark:text-slate-100 text-sm">{sub.name}</td>
+                              <td className="px-6 py-3 font-bold text-slate-800 dark:text-slate-100 text-sm"><Link to={`/services/subtypes/${sub.id}`} className="hover:text-primary transition-colors">{sub.name}</Link></td>
                               <td className="px-6 py-3 font-bold text-primary">{formatCurrency(sub.defaultPrice)}</td>
                               <td className="px-6 py-3 text-slate-500 dark:text-slate-400 text-sm">{getUnitLabel(sub.unit)}</td>
                               <td className="px-6 py-3">
@@ -243,6 +251,9 @@ export const ServicesPage = () => {
                               <td className="px-6 py-3 text-xs text-slate-400 max-w-[180px] truncate">{sub.notes || '-'}</td>
                               <td className="px-6 py-3">
                                 <div className="flex justify-center gap-1">
+                                  <Link onClick={e => e.stopPropagation()} to={`/services/subtypes/${sub.id}`} className="p-1.5 text-slate-400 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-lg transition-colors" title="عرض الملف">
+                                    <span className="material-symbols-outlined text-[18px]">visibility</span>
+                                  </Link>
                                   <button onClick={() => handleToggleSubtypeActive(sub)} className="p-1.5 text-slate-400 hover:text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg transition-colors" title={sub.isActive ? 'تعطيل' : 'تفعيل'}>
                                     <span className="material-symbols-outlined text-[18px]">{sub.isActive ? 'toggle_on' : 'toggle_off'}</span>
                                   </button>

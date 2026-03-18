@@ -4,6 +4,7 @@ import { db } from '../../data/db';
 import { Modal } from '../../shared/components/Modal';
 import { OrderForm } from './OrderForm';
 import { formatCurrency, formatDate, generateId } from '../../core/utils/formatters';
+import type { Order } from '../../core/types';
 
 /* ─── constants ─── */
 const STATUS_OPTIONS = [
@@ -15,7 +16,7 @@ const STATUS_OPTIONS = [
   { value: 'cancelled',  label: 'ملغي' },
 ];
 
-const NEXT_STATUSES: Record<string, { value: string; label: string }[]> = {
+const NEXT_STATUSES: Record<Order['status'], { value: Order['status']; label: string }[]> = {
   new:         [{ value: 'in_progress', label: 'قيد التنفيذ' }, { value: 'cancelled', label: 'ملغي' }],
   in_progress: [{ value: 'ready',       label: 'جاهز' },         { value: 'cancelled', label: 'ملغي' }],
   ready:       [{ value: 'installed',   label: 'تم التركيب' },  { value: 'in_progress', label: 'إعادة للتنفيذ' }, { value: 'cancelled', label: 'ملغي' }],
@@ -229,7 +230,7 @@ ${order.notes ? '<p style="font-size:12px;color:#475569;margin-bottom:14px">مل
 
   const openStatusModal = (order: any) => { setSelectedOrder(order); setIsStatusOpen(true); };
 
-  const handleStatusChange = async (newStatus: string) => {
+  const handleStatusChange = async (newStatus: Order['status']) => {
     if (!selectedOrder) return;
     await db.orders.update(selectedOrder.id, { status: newStatus });
     setIsStatusOpen(false);
@@ -578,7 +579,7 @@ ${order.notes ? '<p style="font-size:12px;color:#475569;margin-bottom:14px">مل
               </span>
             </p>
             <div className="flex flex-col gap-2">
-              {(NEXT_STATUSES[selectedOrder.status] || []).map(ns => (
+              {(NEXT_STATUSES[selectedOrder.status as Order['status']] || []).map((ns: { value: Order['status']; label: string }) => (
                 <button
                   key={ns.value}
                   onClick={() => handleStatusChange(ns.value)}

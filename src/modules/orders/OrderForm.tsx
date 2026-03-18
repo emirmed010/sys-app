@@ -82,27 +82,43 @@ export const OrderForm = ({ order, onSuccess, onCancel }: Props) => {
   const remaining = Math.max(0, total - watchDeposit);
 
   const handleProductSelect = (index: number, productId: string) => {
+    setValue(`items.${index}.itemId`, productId);
+    setValue(`items.${index}.subtypeId`, '');
     const p = products.find(x => x.id === productId);
     if (p) {
       setValue(`items.${index}.name`, p.name);
       setValue(`items.${index}.unitPrice`, p.sellingPrice);
+    } else {
+      setValue(`items.${index}.name`, '');
+      setValue(`items.${index}.unitPrice`, 0);
     }
   };
 
   const handleServiceSelect = (index: number, categoryId: string) => {
+    setValue(`items.${index}.itemId`, categoryId);
     const cat = serviceCategories.find(c => c.id === categoryId);
     if (cat) {
       setValue(`items.${index}.name`, cat.name);
+      setValue(`items.${index}.subtypeId`, '');
+      setValue(`items.${index}.unitPrice`, 0);
+    } else {
+      setValue(`items.${index}.name`, '');
       setValue(`items.${index}.subtypeId`, '');
       setValue(`items.${index}.unitPrice`, 0);
     }
   };
 
   const handleSubtypeSelect = (index: number, subtypeId: string) => {
+    setValue(`items.${index}.subtypeId`, subtypeId);
     const sub = serviceSubtypes.find(s => s.id === subtypeId);
     if (sub) {
       setValue(`items.${index}.name`, sub.name);
       setValue(`items.${index}.unitPrice`, sub.defaultPrice);
+    } else {
+      const categoryId = watchItems[index]?.itemId;
+      const cat = serviceCategories.find(c => c.id === categoryId);
+      setValue(`items.${index}.name`, cat?.name ?? '');
+      setValue(`items.${index}.unitPrice`, 0);
     }
   };
 

@@ -81,6 +81,25 @@ export class WorkshopDatabase extends Dexie {
       payments: 'id, entityType, entityId, date, createdAt, referenceId',
       settings: 'id'
     });
+
+    // Version 4 — add subtypeId indexes for service subtype profile lookups
+    this.version(4).stores({
+      orders: 'id, customerId, status, date, createdAt',
+      orderItems: 'id, orderId, itemId, subtypeId',
+      customers: 'id, name, phone, createdAt',
+      suppliers: 'id, name, phone, createdAt',
+      purchases: 'id, supplierId, date, createdAt',
+      purchaseItems: 'id, purchaseId, itemId',
+      inventory: 'id, code, category, name, createdAt',
+      stockMovements: 'id, itemId, type, date, referenceId',
+      products: 'id, code, categoryId, name, unit, createdAt',
+      serviceCategories: 'id, name, isActive, createdAt',
+      serviceSubtypes: 'id, categoryId, name, isActive, createdAt',
+      invoices: 'id, orderId, customerId, status, date, createdAt',
+      invoiceItems: 'id, invoiceId, itemId, subtypeId',
+      payments: 'id, entityType, entityId, date, createdAt, referenceId',
+      settings: 'id'
+    });
   }
 }
 

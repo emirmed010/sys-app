@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../data/db';
 import { Modal } from '../../shared/components/Modal';
@@ -435,7 +436,10 @@ export const SuppliersPage = () => {
                         {supplier.name.charAt(0)}
                       </div>
                       <div>
-                        <div className="font-bold text-slate-800 dark:text-slate-100">{supplier.name}</div>
+                        <Link to={`/suppliers/${supplier.id}`} className="font-bold text-slate-800 dark:text-slate-100 hover:text-primary transition-colors">
+                          {supplier.name}
+                        </Link>
+                        <div className="text-xs text-slate-400 mt-1">ملف مورد كامل وسجل معاملات</div>
                         {supplier.address && (
                           <div className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-0.5">
                             <span className="material-symbols-outlined text-[14px]">location_on</span>
@@ -476,6 +480,13 @@ export const SuppliersPage = () => {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex justify-center items-center gap-1">
+                      <Link
+                        to={`/suppliers/${supplier.id}`}
+                        className="p-1.5 text-slate-400 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-lg transition-colors"
+                        title="عرض الملف"
+                      >
+                        <span className="material-symbols-outlined text-xl">visibility</span>
+                      </Link>
                       <button
                         onClick={() => setStatementSupplier(supplier)}
                         className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"

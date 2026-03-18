@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../data/db';
 import { Modal } from '../../shared/components/Modal';
@@ -11,8 +12,6 @@ export const ProductsPage = () => {
   const [editingProduct, setEditingProduct] = useState<Product | undefined>();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
-  const [viewProduct, setViewProduct] = useState<Product | undefined>();
-
   const products = useLiveQuery(() =>
     db.products.orderBy('createdAt').reverse().toArray()
   , []);
@@ -204,7 +203,7 @@ export const ProductsPage = () => {
                         <span className="material-symbols-outlined text-[18px]">widgets</span>
                       </div>
                       <div>
-                        <div className="font-bold text-slate-800 dark:text-slate-100 text-sm">{product.name}</div>
+                        <Link to={`/products/${product.id}`} className="font-bold text-slate-800 dark:text-slate-100 text-sm hover:text-primary transition-colors">{product.name}</Link>
                         <div className="text-xs text-slate-400 font-mono" dir="ltr">{product.code}</div>
                       </div>
                     </div>
@@ -246,13 +245,13 @@ export const ProductsPage = () => {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex justify-center gap-1">
-                      <button
-                        onClick={() => setViewProduct(product)}
+                      <Link
+                        to={`/products/${product.id}`}
                         className="p-1.5 text-slate-400 hover:text-sky-500 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-lg transition-colors"
-                        title="عرض التفاصيل"
+                        title="عرض الملف"
                       >
                         <span className="material-symbols-outlined text-xl">visibility</span>
-                      </button>
+                      </Link>
                       <button
                         onClick={() => handleEdit(product)}
                         className="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
@@ -288,63 +287,6 @@ export const ProductsPage = () => {
           onCancel={() => setIsModalOpen(false)}
         />
       </Modal>
-
-      {/* View Details Modal */}
-      {viewProduct && (
-        <Modal
-          isOpen={!!viewProduct}
-          onClose={() => setViewProduct(undefined)}
-          title={`تفاصيل المنتج: ${viewProduct.name}`}
-          width="md"
-        >
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { label: 'كود المنتج', value: viewProduct.code, mono: true },
-                { label: 'التصنيف', value: viewProduct.categoryId || '—' },
-                { label: 'الوحدة', value: getUnitLabel(viewProduct.unit) },
-                { label: 'الكمية الحالية', value: `${viewProduct.quantity} ${getUnitLabel(viewProduct.unit)}` },
-                { label: 'سعر التكلفة', value: formatCurrency(viewProduct.costPrice) },
-                { label: 'سعر البيع', value: formatCurrency(viewProduct.sellingPrice) },
-                { label: 'حد الإنذار', value: viewProduct.minStock > 0 ? viewProduct.minStock.toString() : '—' },
-                { label: 'صنف المخزون', value: viewProduct.inventoryItemId && inventoryMap[viewProduct.inventoryItemId] ? inventoryMap[viewProduct.inventoryItemId].name : '—' },
-              ].map(({ label, value, mono }) => (
-                <div key={label} className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3">
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">{label}</p>
-                  <p className={`text-sm font-bold text-slate-800 dark:text-slate-100 ${mono ? 'font-mono' : ''}`}>{value}</p>
-                </div>
-              ))}
-            </div>
-            {viewProduct.notes && (
-              <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3">
-                <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">ملاحظات</p>
-                <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap">{viewProduct.notes}</p>
-              </div>
-            )}
-            {viewProduct.minStock > 0 && viewProduct.quantity <= viewProduct.minStock && (
-              <div className="flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3 text-amber-700 dark:text-amber-400 text-sm">
-                <span className="material-symbols-outlined text-xl">warning</span>
-                تحذير: الكمية المتوفرة أقل من أو تساوي حد الإنذار
-              </div>
-            )}
-            <div className="flex justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-              <button
-                onClick={() => { setViewProduct(undefined); handleEdit(viewProduct); }}
-                className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-colors flex items-center gap-1.5"
-              >
-                <span className="material-symbols-outlined text-lg">edit</span>
-                تعديل
-              </button>
-              <button
-                onClick={() => setViewProduct(undefined)}
-                className="px-4 py-2 rounded-lg text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-              >
-                إغلاق
-              </button>
-            </div>
-          </div>
-        </Modal>
-      )}
     </>
   );
 };

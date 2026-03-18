@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../data/db';
 import { Modal } from '../../shared/components/Modal';
@@ -96,7 +97,10 @@ export const CustomersPage = () => {
                         {customer.name.charAt(0)}
                       </div>
                       <div>
-                        <div className="font-bold text-slate-800 dark:text-slate-100">{customer.name}</div>
+                        <Link to={`/customers/${customer.id}`} className="font-bold text-slate-800 dark:text-slate-100 hover:text-primary transition-colors">
+                          {customer.name}
+                        </Link>
+                        <div className="text-xs text-slate-400 mt-1">ملف عميل كامل وسجل معاملات</div>
                       </div>
                     </div>
                   </td>
@@ -129,6 +133,13 @@ export const CustomersPage = () => {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex justify-center gap-2">
+                      <Link
+                        to={`/customers/${customer.id}`}
+                        className="p-1.5 text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-900/20 rounded-lg transition-colors"
+                        title="عرض الملف"
+                      >
+                        <span className="material-symbols-outlined text-xl">visibility</span>
+                      </Link>
                       <button 
                         onClick={() => handleEdit(customer)}
                         className="p-1.5 text-slate-400 hover:text-primary dark:hover:text-primary hover:bg-primary/10 rounded-lg transition-colors" 

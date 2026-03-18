@@ -1,18 +1,24 @@
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { AppRouteError } from './AppRouteError';
 import { MainLayout } from '../../shared/layouts/MainLayout';
 import { DashboardPage } from '../../modules/dashboard/DashboardPage';
 import { CustomersPage } from '../../modules/customers/CustomersPage';
+import { CustomerProfilePage } from '../../modules/customers/CustomerProfilePage';
 import { ProductsPage } from '../../modules/products/ProductsPage';
+import { ProductProfilePage } from '../../modules/products/ProductProfilePage';
 import { OrdersPage } from '../../modules/orders/OrdersPage';
 import { InvoicesPage } from '../../modules/invoices/InvoicesPage';
 import { SettingsPage } from '../../modules/settings/SettingsPage';
 import { SuppliersPage } from '../../modules/suppliers/SuppliersPage';
+import { SupplierProfilePage } from '../../modules/suppliers/SupplierProfilePage';
 import { PurchasesPage } from '../../modules/purchases/PurchasesPage';
 
 import { InventoryPage } from '../../modules/inventory/InventoryPage';
 import { ReportsPage } from '../../modules/reports/ReportsPage';
 import { ServicesPage } from '../../modules/services/ServicesPage';
+import { ServiceCategoryProfilePage } from '../../modules/services/ServiceCategoryProfilePage';
+import { ServiceSubtypeProfilePage } from '../../modules/services/ServiceSubtypeProfilePage';
 import { DebtAndPaymentsPage } from '../../modules/payments/DebtAndPaymentsPage';
 
 const ComingSoonModule = ({ title, icon, desc }: { title: string, icon: string, desc: string }) => (
@@ -40,15 +46,21 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout />,
+    errorElement: <AppRouteError />,
     children: [
       { index: true, element: <DashboardPage /> },
       { path: 'orders', element: <OrdersPage /> },
       { path: 'customers', element: <CustomersPage /> },
+      { path: 'customers/:customerId', element: <CustomerProfilePage /> },
       { path: 'suppliers', element: <SuppliersPage /> },
+      { path: 'suppliers/:supplierId', element: <SupplierProfilePage /> },
       { path: 'purchases', element: <PurchasesPage /> },
       { path: 'inventory', element: <InventoryPage /> },
       { path: 'products', element: <ProductsPage /> },
+      { path: 'products/:productId', element: <ProductProfilePage /> },
       { path: 'services', element: <ServicesPage /> },
+      { path: 'services/categories/:categoryId', element: <ServiceCategoryProfilePage /> },
+      { path: 'services/subtypes/:subtypeId', element: <ServiceSubtypeProfilePage /> },
       { path: 'invoices', element: <InvoicesPage /> },
       { path: 'payments', element: <Payments /> },
       { path: 'reports', element: <ReportsPage /> },
