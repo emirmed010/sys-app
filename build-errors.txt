@@ -1,0 +1,32 @@
+﻿src/modules/customers/CustomersPage.tsx(100,95): error TS2339: Property 'type' does not exist on type 'Customer'.
+src/modules/inventory/InventoryPage.tsx(52,58): error TS2551: Property 'minQuantity' does not exist on type 'InventoryItem'. Did you mean 'quantity'?
+src/modules/inventory/InventoryPage.tsx(61,95): error TS2339: Property 'unitCost' does not exist on type 'InventoryItem'.
+src/modules/inventory/InventoryPage.tsx(113,130): error TS2551: Property 'minQuantity' does not exist on type 'InventoryItem'. Did you mean 'quantity'?
+src/modules/inventory/InventoryPage.tsx(118,27): error TS2551: Property 'minQuantity' does not exist on type 'InventoryItem'. Did you mean 'quantity'?
+src/modules/inventory/InventoryPage.tsx(121,42): error TS2339: Property 'unitCost' does not exist on type 'InventoryItem'.
+src/modules/inventory/InventoryPage.tsx(124,42): error TS2339: Property 'unitCost' does not exist on type 'InventoryItem'.
+src/modules/orders/OrderForm.tsx(42,5): error TS2322: Type 'Resolver<{ customerId: string; status: "new" | "in_progress" | "ready" | "installed"; deposit: unknown; items: { type: "product" | "service"; itemId: string; quantity: unknown; unitPrice: unknown; name: string; }[]; notes?: string | undefined; }, any, { ...; }>' is not assignable to type 'Resolver<{ customerId: string; status: "new" | "in_progress" | "ready" | "installed"; deposit: number; items: { type: "product" | "service"; itemId: string; quantity: number; unitPrice: number; name: string; }[]; notes?: string | undefined; }, any, { ...; }>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'ResolverOptions<{ customerId: string; status: "new" | "in_progress" | "ready" | "installed"; deposit: number; items: { type: "product" | "service"; itemId: string; quantity: number; unitPrice: number; name: string; }[]; notes?: string | undefined; }>' is not assignable to type 'ResolverOptions<{ customerId: string; status: "new" | "in_progress" | "ready" | "installed"; deposit: unknown; items: { type: "product" | "service"; itemId: string; quantity: unknown; unitPrice: unknown; name: string; }[]; notes?: string | undefined; }>'.
+      Types of property 'names' are incompatible.
+        Type 'string[] | undefined' is not assignable to type '("status" | "notes" | "customerId" | "deposit" | "items")[] | undefined'.
+          Type 'string[]' is not assignable to type '("status" | "notes" | "customerId" | "deposit" | "items")[]'.
+            Type 'string' is not assignable to type '"status" | "notes" | "customerId" | "deposit" | "items"'.
+src/modules/orders/OrderForm.tsx(119,34): error TS2345: Argument of type '(data: OrderFormValues) => Promise<void>' is not assignable to parameter of type 'SubmitHandler<TFieldValues>'.
+  Types of parameters 'data' and 'data' are incompatible.
+    Type 'TFieldValues' is not assignable to type '{ customerId: string; status: "new" | "in_progress" | "ready" | "installed"; deposit: number; items: { type: "product" | "service"; itemId: string; quantity: number; unitPrice: number; name: string; }[]; notes?: string | undefined; }'.
+      Type 'FieldValues' is missing the following properties from type '{ customerId: string; status: "new" | "in_progress" | "ready" | "installed"; deposit: number; items: { type: "product" | "service"; itemId: string; quantity: number; unitPrice: number; name: string; }[]; notes?: string | undefined; }': customerId, status, deposit, items
+src/modules/products/ProductForm.tsx(29,5): error TS2322: Type 'Resolver<{ code: string; name: string; costPrice: unknown; sellingPrice: unknown; categoryId?: string | undefined; }, any, { code: string; name: string; costPrice: number; sellingPrice: number; categoryId?: string | undefined; }>' is not assignable to type 'Resolver<{ code: string; name: string; costPrice: number; sellingPrice: number; categoryId?: string | undefined; }, any, { code: string; name: string; costPrice: number; sellingPrice: number; categoryId?: string | undefined; }>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'ResolverOptions<{ code: string; name: string; costPrice: number; sellingPrice: number; categoryId?: string | undefined; }>' is not assignable to type 'ResolverOptions<{ code: string; name: string; costPrice: unknown; sellingPrice: unknown; categoryId?: string | undefined; }>'.
+      Type 'unknown' is not assignable to type 'number'.
+src/modules/products/ProductForm.tsx(46,31): error TS2345: Argument of type '{ createdAt: number; code: string; name: string; costPrice: number; sellingPrice: number; categoryId?: string | undefined; id: `${string}-${string}-${string}-${string}-${string}`; }' is not assignable to parameter of type 'Product'.
+  Types of property 'categoryId' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/modules/products/ProductForm.tsx(60,34): error TS2345: Argument of type '(data: ProductFormValues) => Promise<void>' is not assignable to parameter of type 'SubmitHandler<TFieldValues>'.
+  Types of parameters 'data' and 'data' are incompatible.
+    Type 'TFieldValues' is not assignable to type '{ code: string; name: string; costPrice: number; sellingPrice: number; categoryId?: string | undefined; }'.
+      Type 'FieldValues' is missing the following properties from type '{ code: string; name: string; costPrice: number; sellingPrice: number; categoryId?: string | undefined; }': code, name, costPrice, sellingPrice
+src/modules/products/ProductsPage.tsx(105,32): error TS2551: Property 'category' does not exist on type 'Product'. Did you mean 'categoryId'?
+src/shared/components/Card.tsx(2,10): error TS2305: Module '"../layouts/Sidebar"' has no exported member 'cn'.
